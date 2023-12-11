@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as pth;
 import 'dart:async';
 
+
 class DBHelper {
   static Database? _db;
 
@@ -29,6 +30,15 @@ class DBHelper {
     return await dbClient.insert('user', user.toMap());
   }
 
+  Future<List<User>> getUsers() async {
+    var dbClient = await db;
+    List<Map<String, dynamic>> maps = await dbClient.query('user');
+    return List.generate(maps.length, (i) {
+      return User.fromMap(maps[i]);
+    });
+  }
+
+
   //test read
   Future<void> test_read(String db_name) async {
     // Get a location using getDatabasesPath
@@ -53,7 +63,7 @@ class User {
   String email;
   String address;
 
-  User(this.id, this.username, this.password, this.phone, this.email, this.address);
+  User(this.id, this.username, this.password, this.phone, this.email, this.address,);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -66,4 +76,13 @@ class User {
     };
     return map;
   }
+  User.fromMap(Map<String, dynamic> map)
+      : id = map['id'],
+        username = map['username'],
+        password = map['password'],
+        phone = map['phone'],
+        email = map['email'],
+        address = map['address'];
 }
+
+

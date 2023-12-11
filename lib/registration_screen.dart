@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'MainScreen.dart';
 import 'db_helper.dart';
 
 
@@ -138,6 +139,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('User data saved')));
                     await dbHelper.test_read('user.db');
                   }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InfoPage()),
+                  );
                 },
                 child: const Text('Submit'),
               ),
